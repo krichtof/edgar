@@ -1,21 +1,21 @@
-require "spec_helper"
+require "rails_helper"
 
 describe UserMailer do
   before(:all) do
-    @user = FactoryGirl.create(:user, email: "example@example.com")
-    @email = UserMailer.welcome_email(@user).deliver
+    @user = FactoryGirl.create(:user, label_name: "mondial")
+    @email = UserMailer.welcome_email(@user)
   end
 
   it "should be delivered to the email address provided" do
-    @email.should deliver_to("example@example.com")
+    expect(@email.to).to eq([@user.email])
   end
 
   it "should contain the correct message in the mail body" do
-    @email.should have_body_text(/Welcome/)
+    expect(@email.body.encoded).to match('Welcome')
   end
 
   it "should have the correct subject" do
-    @email.should have_subject(/Request Received/)
+    expect(@email.subject).to match('Request Received')
   end
 
 end
