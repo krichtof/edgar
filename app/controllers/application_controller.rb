@@ -3,21 +3,21 @@ class ApplicationController < ActionController::Base
   # before_filter :set_locale
   before_filter :set_current_tenant
   after_filter :reset_tenant
-  
+
   helper_method :current_account
   helper_method :announcements_count
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
   end
-  
+
   def current_account
     Account.find(Account.current_id)
   end
 
   def announcements_count
     last_hit = cookies.signed[:last_hit]
-    if last_hit 
+    if last_hit
       Announcement.where("published_at >= ? AND published_at <= ?", Time.at(last_hit), Time.zone.now).count
     else
       Announcement.where("published_at >= ? AND published_at <= ?", Time.zone.now - 1.week, Time.zone.now).count
