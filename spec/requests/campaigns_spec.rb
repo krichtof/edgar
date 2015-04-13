@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Campaigns" do
   describe "GET /campaigns" do
