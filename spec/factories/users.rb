@@ -11,6 +11,13 @@ FactoryGirl.define do
       account = FactoryGirl.build(:account)
       user.accounts = [account]
       FactoryGirl.build(:abilitation, user: user, account: account)
+      user.add_role(:member)
+    end
+
+  end
+
+  factory :admin, parent: :user do
+    after(:build) do |user|
       user.add_role(:admin)
     end
   end

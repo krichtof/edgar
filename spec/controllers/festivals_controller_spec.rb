@@ -3,7 +3,7 @@ require 'rails_helper'
 describe FestivalsController do
   context "with a logged user" do
 
-    let(:user) { FactoryGirl.create(:user, label_name: "truc") }
+    let(:user) { FactoryGirl.create(:admin, label_name: "truc") }
 
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:user]
