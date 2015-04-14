@@ -1,17 +1,13 @@
 class ProjectsController < AppController
-  # GET /projects
-  # GET /projects.json
   def index
     @projects = Project.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @projects }
     end
   end
 
-  # GET /projects/1
-  # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
 
@@ -21,8 +17,6 @@ class ProjectsController < AppController
     end
   end
 
-  # GET /projects/new
-  # GET /projects/new.json
   def new
     @project = Project.new
 
@@ -32,13 +26,10 @@ class ProjectsController < AppController
     end
   end
 
-  # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
   end
 
-  # POST /projects
-  # POST /projects.json
   def create
     @project = Project.new(params[:project])
 
@@ -53,8 +44,6 @@ class ProjectsController < AppController
     end
   end
 
-  # PUT /projects/1
-  # PUT /projects/1.json
   def update
     @project = Project.find(params[:id])
 
