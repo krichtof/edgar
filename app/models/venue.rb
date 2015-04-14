@@ -80,7 +80,7 @@ class Venue < ActiveRecord::Base
     self.build_structure unless structure.present?
     self.structure.build_contact unless structure.contact.present?
     contact = structure.contact
-    
+
     c_style_list = self.style_list
     contact.style_tags = c_style_list.join(',') if c_style_list.present?
     

@@ -2,8 +2,6 @@
 class VenuesController < AppController
   include ApplicationHelper
 
-  # GET /venues
-  # GET /venues.json
   def index
     if params[:kind]
       @filtered_by = "(#{params[:kind]})"
@@ -17,8 +15,6 @@ class VenuesController < AppController
     end
   end
 
-  # GET /venues/1
-  # GET /venues/1.json
   def show
     @venue = Venue.find(params[:id])
     add_asset(@venue.structure.contact)
@@ -32,8 +28,6 @@ class VenuesController < AppController
     @reporting = @venue.reportings.build
   end
 
-  # GET /venues/new
-  # GET /venues/new.json
   def new
     session[:return_to] = request.referer
     @venue = Venue.new
@@ -48,7 +42,6 @@ class VenuesController < AppController
     end
   end
 
-  # GET /venues/1/edit
   def edit
     @venue = Venue.find(params[:id])
     add_asset(@venue.structure.contact)
@@ -56,14 +49,12 @@ class VenuesController < AppController
     @venue.rooms.build(name:@venue.name).capacities.build unless @venue.rooms.any?
   end
 
-  # POST /venues
-  # POST /venues.json
   def create
     @venue = Venue.new(params[:venue])
-    add_asset(@venue.structure.contact)
 
     respond_to do |format|
       if @venue.save
+        add_asset(@venue.structure.contact)
         format.html do
           if params[:commit] == t("helpers.submit.venue.create")
             redirect_to @venue, notice: t("activerecord.notices.models.venue.created", name: @venue.name)
@@ -80,8 +71,6 @@ class VenuesController < AppController
     end
   end
 
-  # PUT /venues/1
-  # PUT /venues/1.json
   def update
     @venue = Venue.find(params[:id])
     respond_to do |format|
@@ -98,8 +87,6 @@ class VenuesController < AppController
     end
   end
 
-  # DELETE /venues/1
-  # DELETE /venues/1.json
   def destroy
     @venue_id = params[:id]
     @venue = Venue.find(@venue_id)
