@@ -3,7 +3,6 @@ class HomeController < AppController
     if current_user.has_role? :admin
       redirect_to users_path
     else
-
       if !current_user.welcome_hidden?
         redirect_to welcome_path
         return

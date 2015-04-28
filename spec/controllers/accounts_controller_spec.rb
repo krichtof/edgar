@@ -5,14 +5,16 @@ describe AccountsController do
   describe "GET 'edit'" do
     it "returns http success" do
       get 'edit'
-      response.should be_success
+      expect(response).to be_redirect
+      expect(response).to redirect_to(new_user_session_path(locale: nil))
     end
   end
 
   describe "GET 'update'" do
     it "returns http success" do
       get 'update'
-      response.should be_success
+      expect(response).to be_redirect
+      expect(response).to redirect_to(new_user_session_path(locale: nil))
     end
   end
 

@@ -1,18 +1,15 @@
 class FestivalsController < AppController
   include ApplicationHelper
-  # GET /festivals
-  # GET /festivals.json
+
   def index
     @festivals = Festival.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @festivals }
     end
   end
 
-  # GET /festivals/1
-  # GET /festivals/1.json
   def show
     @festival = Festival.find(params[:id])
     add_asset(@festival.structure.contact)
@@ -26,8 +23,6 @@ class FestivalsController < AppController
     @reporting = @festival.structure.reportings.build
   end
 
-  # GET /festivals/new
-  # GET /festivals/new.json
   def new
     @festival = Festival.new
 

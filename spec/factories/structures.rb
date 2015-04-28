@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :structure do
+    contact
   end
 end

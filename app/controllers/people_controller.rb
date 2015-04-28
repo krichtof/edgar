@@ -1,20 +1,17 @@
 class PeopleController < AppController
   include ApplicationHelper
-  # GET /people
-  # GET /people.json
+
   def index
+    json = []
     if params[:term].present?
       @contacts = Contact.order(:name).where(contactable_type: "Person").where("lower(name) LIKE ?", "%#{params[:term].downcase}%")
-      json = []
       @contacts.each { |c| json.push({value:c.name, label:c.name, new: "false", avatar: c.avatar_url(:thumb)}) }
-      
+
       unless @contacts.map(&:name).map(&:downcase).include?(params[:term].downcase)
         json.push({value:params[:term], label: "Créer la personne " + params[:term], new:"true"})
       end
-      
-      render json: json
     end
-    
+    render json: json
   end
 
   # GET /people/1

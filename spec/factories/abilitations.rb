@@ -1,9 +1,14 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :abilitation do
-    user_id 1
-    account_id 1
-    kind "MyString"
+    user
+    account
+
+    trait :member do
+      kind 'member'
+    end
+
+    trait :admin do
+      kind 'admin'
+    end
   end
 end

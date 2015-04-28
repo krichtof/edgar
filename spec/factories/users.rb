@@ -3,14 +3,22 @@
 FactoryGirl.define do
   factory :user do
     email { Faker::Internet.email}
-    factory :confirmed_user, parent: :user do
-      password 'changeme'
-      password_confirmation 'changeme'
-      # required if the Devise Confirmable module is used
-      confirmed_at Time.now
-      after(:build) do |user|
-        user.accounts = [FactoryGirl.build(:account)]
-      end
+    password 'changeme'
+    password_confirmation 'changeme'
+    confirmed_at Time.now
+
+    after(:build) do |user|
+      account = FactoryGirl.build(:account)
+      user.accounts = [account]
+      FactoryGirl.build(:abilitation, user: user, account: account)
+      user.add_role(:member)
+    end
+
+  end
+
+  factory :admin, parent: :user do
+    after(:build) do |user|
+      user.add_role(:admin)
     end
   end
 end

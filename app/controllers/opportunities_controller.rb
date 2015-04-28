@@ -1,6 +1,4 @@
 class OpportunitiesController < AppController
-  # GET /opportunities
-  # GET /opportunities.json
   def index
     @opportunities = Opportunity.all
 
@@ -10,11 +8,8 @@ class OpportunitiesController < AppController
     end
   end
 
-  # GET /opportunities/1
-  # GET /opportunities/1.json
   def show
-    # @opportunity = Opportunity.find(params[:id])
-
+    @opportunity = Opportunity.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @opportunity }

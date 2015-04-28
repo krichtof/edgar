@@ -30,12 +30,12 @@ class User < ActiveRecord::Base
   # has_and_belongs_to_many :accounts
   has_many :accounts, through: :abilitations
   has_many :abilitations, dependent: :destroy
-  
+
   accepts_nested_attributes_for :accounts
   validates_associated :accounts
-  
+
   validates_presence_of :label_name
-  
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
     p[:name] = params[:name]
     p[:first_name] = params[:first_name]
     p[:last_name] = params[:last_name]
-    
+
     update_attributes(p)
   end
 
@@ -131,11 +131,11 @@ class User < ActiveRecord::Base
       self.email
     end
   end
-  
+
   def to_s
     display_name
   end
-  
+
   def nickname
     display_name.truncate(8, omission:"...")
   end
@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
     self.generate_confirmation_token!
     UserMailer.abilitation_instructions(account,manager,self).deliver
   end
-  
+
   def send_abilitation_notification(account, manager)
     UserMailer.abilitation_notification(account, manager, self).deliver
   end
@@ -159,7 +159,7 @@ class User < ActiveRecord::Base
     end
     @label_name
   end
-  
+
   def label_name=(label)
     @label_name = label
   end
@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
 
   def add_user_to_mailchimp
     return if email.include?(ENV['ADMIN_EMAIL'])
-    mailchimp = Gibbon.new
+    mailchimp = Gibbon::API.new
     result = mailchimp.list_subscribe({
       :id => ENV['MAILCHIMP_LIST_ID'],
       :email_address => self.email,
@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   end
 
   def remove_user_from_mailchimp
-    mailchimp = Gibbon.new
+    mailchimp = Gibbon::API.new
     result = mailchimp.list_unsubscribe({
       :id => ENV['MAILCHIMP_LIST_ID'],
       :email_address => self.email,
