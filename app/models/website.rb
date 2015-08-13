@@ -31,6 +31,6 @@ class Website < ActiveRecord::Base
   end
 
   def to_s
-    "#{url} [#{kind}]"
+    url
   end
 end

@@ -160,6 +160,8 @@ REGIONS = {
   24 => { name: "Basse-Normandie" }
 }
 
+  MAIN_ADDRESS = :main_address
+  ADMIN_ADDRESS = :admin_address
   def set_account
     self.account_id = self.contact.account_id if self.contact.present?
   end
@@ -173,7 +175,7 @@ REGIONS = {
   end
 
   def to_s
-    "#{full_address} [#{kind}]"
+    "#{full_address} [#{I18n.t(kind, scope: 'simple_form.options.addresses.kind')}]"
   end
 
   def department_name

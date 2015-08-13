@@ -104,6 +104,10 @@ class Phone < ActiveRecord::Base
   end
 
   def to_s
-    "#{number} [#{I18n.t(kind,scope:'simple_form.options.phones.classic_kind')}]"
+    if self.classic_kind == OTHER
+      "#{number} [#{self.specific_kind}]"
+    else    
+      "#{number} [#{I18n.t(kind,scope:'simple_form.options.phones.classic_kind')}]"
+    end
   end
 end

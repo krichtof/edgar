@@ -267,6 +267,10 @@ class Venue < ActiveRecord::Base
   def period
     self.schedulings.first.period if self.schedulings.any?
   end
+  
+  def translated_period
+    self.schedulings.first.translated_period if self.schedulings.any?
+  end
 
   def scheduling_remark
     self.schedulings.first.remark if self.schedulings.any?
@@ -275,4 +279,11 @@ class Venue < ActiveRecord::Base
   def prospecting_months
     self.schedulings.first.prospecting_months if self.schedulings.any?
   end
+  
+  def translated_kind
+    return nil unless self.kind.present?
+    I18n.t(self.kind, scope: 'simple_form.options.venue.kind')
+  end
+  
+  
 end

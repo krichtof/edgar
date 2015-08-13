@@ -7,8 +7,8 @@ describe Website do
   end
 
   describe "to_s" do
-    let(:website) { FactoryGirl.build(:website, url: 'http://merciedgar.com', kind: Website::HOME ) }
-    it { expect(website.to_s).to eq("http://merciedgar.com [#{Website::HOME}]") }
+    let(:website) { FactoryGirl.build(:website, url: 'http://merciedgar.com' ) }
+    it { expect(website.to_s).to eq("http://merciedgar.com") }
   end
 end
 

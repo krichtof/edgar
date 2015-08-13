@@ -57,5 +57,17 @@ describe Venue do
       it { expect(first_room.venue.capacity_tags).to eq(['401-1200', '> 1200']) }
     end
   end
+  
+  describe "translated_kind" do
+    context "no specified kind" do
+      let(:venue) { FactoryGirl.build(:venue, kind: nil)}
+      it { expect(venue.translated_kind).to eq(nil) }
+    end
+    
+    context "with kind" do
+      let(:venue) { FactoryGirl.build(:venue, kind: :cultural_center) }
+      it { expect(venue.translated_kind).to eq(I18n.t(venue.kind, scope: 'simple_form.options.venue.kind')) }
+    end    
+  end
 
 end

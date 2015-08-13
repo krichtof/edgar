@@ -6,6 +6,18 @@ describe Scheduling do
     it { expect(FactoryGirl.build(:scheduling)).to be_valid }
   end
 
+  describe "translated_period" do
+    context "no specified period" do
+      let(:scheduling) { FactoryGirl.build(:scheduling, period: nil)}
+      it { expect(scheduling.translated_period).to eq(nil) }
+    end
+    
+    context "with period" do
+      let(:scheduling) { FactoryGirl.build(:scheduling, period: Scheduling::QUATERLY) }
+      it { expect(scheduling.translated_period).to eq(I18n.t(scheduling.period, scope: 'simple_form.options.schedulings.period')) }
+    end    
+  end
+  
   describe "export" do
     context "with an account with a scheduling" do
       let(:account) { FactoryGirl.create(:account) }
@@ -21,13 +33,27 @@ describe Scheduling do
   describe "to_csv" do
     context "with a show buyer only" do
       let(:buyer) { FactoryGirl.create(:show_buyer) }
-      let(:scheduling) { FactoryGirl.create(:scheduling, show_buyer: buyer, show_host: nil) }
+      
+      context "with period" do
+        let(:scheduling) { FactoryGirl.create(:scheduling, show_buyer: buyer, show_host: nil, period: Scheduling::QUATERLY) }
 
-      let(:expected_line) {[
-        scheduling.name, scheduling.period, scheduling.prospecting_months, scheduling.contract_list, scheduling.style_list, scheduling.remark, scheduling.discovery, buyer.name, ExportTools.build_list(buyer.emails), ExportTools.build_list(buyer.phones), ExportTools.build_list(buyer.addresses), ExportTools.build_list(buyer.websites), buyer.network_list,buyer.custom_list, buyer.remark, ExportTools.build_list(buyer.people)
-      ].to_csv}
+        let(:expected_line) {[
+          scheduling.name, I18n.t(scheduling.period, scope: 'simple_form.options.schedulings.period'), scheduling.prospecting_months, scheduling.contract_list, scheduling.style_list, scheduling.remark, scheduling.discovery, buyer.name, ExportTools.build_list(buyer.emails), ExportTools.build_list(buyer.phones), ExportTools.build_list(buyer.addresses), ExportTools.build_list(buyer.websites), buyer.network_list,buyer.custom_list, buyer.remark, ExportTools.build_list(buyer.people)
+        ].to_csv}
 
-      it { expect(scheduling.to_csv).to eq(expected_line) }
+        it { expect(scheduling.to_csv).to eq(expected_line) }
+      end
+      
+      context "without period" do
+        let(:scheduling) { FactoryGirl.create(:scheduling, show_buyer: buyer, show_host: nil, period: nil) }
+
+        let(:expected_line) {[
+          scheduling.name, scheduling.period, scheduling.prospecting_months, scheduling.contract_list, scheduling.style_list, scheduling.remark, scheduling.discovery, buyer.name, ExportTools.build_list(buyer.emails), ExportTools.build_list(buyer.phones), ExportTools.build_list(buyer.addresses), ExportTools.build_list(buyer.websites), buyer.network_list,buyer.custom_list, buyer.remark, ExportTools.build_list(buyer.people)
+        ].to_csv}
+
+        it { expect(scheduling.to_csv).to eq(expected_line) }
+      end
+      
     end
     
     context "with a festival only" do
@@ -35,7 +61,7 @@ describe Scheduling do
       let(:scheduling) { FactoryGirl.create(:scheduling, show_buyer: nil, show_host: festival) }
       
       let(:expected_line) {[
-        scheduling.name, scheduling.period, scheduling.prospecting_months, scheduling.contract_list, scheduling.style_list, 
+        scheduling.name, I18n.t(scheduling.period, scope: 'simple_form.options.schedulings.period'), scheduling.prospecting_months, scheduling.contract_list, scheduling.style_list, 
         "Nb edition : 2 / Derniere annee : 1999", 
         scheduling.discovery, festival.name, ExportTools.build_list(festival.emails), ExportTools.build_list(festival.phones), 
         ExportTools.build_list(festival.addresses), ExportTools.build_list(festival.websites), festival.network_list,festival.custom_list, 
@@ -44,8 +70,7 @@ describe Scheduling do
       
       it { expect(scheduling.organizer).to respond_to(:nb_edition) }
       it { expect(scheduling.to_csv).to eq(expected_line) }
-    end
-    
+    end        
   end
 
   describe "Organizer" do

@@ -59,7 +59,11 @@ class Email < ActiveRecord::Base
   end
 
   def to_s
-    "#{self.address} [#{self.kind}]"
+    if self.classic_kind == OTHER
+      "#{self.address} [#{self.specific_kind}]"
+    else    
+      "#{self.address} [#{I18n.t(kind,scope:'simple_form.options.emails.classic_kind')}]"
+    end
   end
 
 end
