@@ -490,7 +490,7 @@ DEPENDENCIES
   hub
   icalendar
   jquery-rails (~> 3.0.4)
-  jquery-ui-rails
+  jquery-ui-rails (~> 4.1)
   kaminari (~> 0.15)
   launchy
   letter_opener
