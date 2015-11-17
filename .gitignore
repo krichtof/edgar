@@ -93,3 +93,4 @@ config/database_with_prod_in_dev.yml
 .env
 public/assets/uploads/
 erd.pdf
+config/database.yml

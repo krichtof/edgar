@@ -12,5 +12,5 @@
 
 %p
   Merci de cliquer sur le lien ci-dessous pour confirmer votre compte :
-%p= link_to 'Confirmer mon compte', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, subdomain: 'www', :locale => I18n.locale)
-%p= confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, subdomain: 'www', :locale => I18n.locale)
+%p= link_to 'Confirmer mon compte', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, subdomain: 'login', :locale => I18n.locale)
+%p= confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, subdomain: 'login', :locale => I18n.locale)

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_account
-    Account.find(Account.current_id)
+    @current_account ||= Account.find(Account.current_id)
   end
 
   def announcements_count

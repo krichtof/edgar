@@ -57,13 +57,14 @@
         %h4 ADHESION SOLO
         %p Un seul utilisateur par compte
         .badge= "#{Account::SOLO_PRICE}€/an"
-        &nbsp;
-        = form_tag subscription_path, method: :post, id: 'formSolo' do
-          = hidden_field_tag :amount, Account::SOLO_PRICE
-          = hidden_field_tag :team, false
-        
-          %button.stripeify.btn.btn-primary{"data-email" => current_user.email, "data-form" => "#formSolo", "data-name" => "Adhésion SOLO", "data-description" => "1 seul utilisateur", "data-image" => image_path('multipage/edgar-head.png'), "data-key" => ENV['STRIPE_PUBLIC_KEY'], "data-amount" => Account::SOLO_PRICE} Adhérer en ligne
-    / ITEM
+        %p
+          &nbsp;
+          = form_tag subscription_path, method: :post, id: 'formSolo' do
+            = hidden_field_tag :amount, Account::SOLO_PRICE
+            = hidden_field_tag :team, false
+          
+            %button.stripeify.btn.btn-alert{"data-email" => current_user.email, "data-form" => "#formSolo", "data-name" => "Adhésion SOLO", "data-description" => "1 seul utilisateur", "data-image" => image_path('multipage/edgar-head.png'), "data-key" => ENV['STRIPE_PUBLIC_KEY'], "data-amount" => Account::SOLO_PRICE} Adhérer en ligne
+      / ITEM
     .span5
       .label-round.plan-soon
         %i.ico.edi-user

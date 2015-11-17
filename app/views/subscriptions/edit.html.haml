@@ -1,93 +1,94 @@
+
 - content_for :scripts do
-  = javascript_include_tag "https://js.stripe.com/v2/"
+  = javascript_include_tag("https://checkout.stripe.com/checkout.js")
   :javascript
-    Stripe.setPublishableKey('pk_test_B2XmDMBB8zaYlMy7WPuxQQ1I');
-    jQuery(function($) {
-      $('#payment-form').submit(function(event) {
-        var $form = $(this);
 
-        // Disable the submit button to prevent repeated clicks
-        $form.find('button').prop('disabled', true);
+    $.fn.stripeify = function() {
+      this.each(function() {
+        var button = $(this);
+        
+        var handler = StripeCheckout.configure({
+          key: button.data('key'),
+          image: button.data('image'),
+          locale: 'auto',
+          token: function(token) {
+            var form = $(button.data('form'));
+            form.append($('<input type="hidden" name="stripeToken" />').val(token.id));
+            $('#processing_payment').show();
+            form.get(0).submit();
 
-        Stripe.card.createToken($form, stripeResponseHandler);
-
-        // Prevent the form from submitting with the default action
-        return false;
+          }
+        });
+        
+        button.on('click.stripeify', function(e) {
+          e.preventDefault();
+          var amount = button.data('amount') ? button.data('amount') : $(button.data('amount-input')).val();
+          handler.open({
+            name: button.data('name'),
+            email: button.data('email'),
+            description: button.data('description'),
+            currency: "eur",
+            amount: amount * 100
+          });
+          console.log("handler defined");
+        });
+        
       });
-    });
-    
-    function stripeResponseHandler(status, response) {
-      var $form = $('#payment-form');
-
-      if (response.error) {
-        // Show the errors on the form
-        $form.find('.payment-errors').text(response.error.message);
-        $form.find('button').prop('disabled', false);
-      } else {
-        // response contains id and card, which contains additional card details
-        var token = response.id;
-        // Insert the token into the form so it gets submitted to the server
-        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-        // and submit
-        $form.get(0).submit();
-      }
     };
-    
+    $(document).ready(function() {
+      $('.stripeify').stripeify();
+    });
+
 %header.page-title
   %h1 Envie d'une adhésion GOLD ?
 
+.row-fluid#processing_payment{style: "display:none"}
+  .notice Merci de patienter ! En cours de paiement...
 - if flash[:notice]
   .row-fluid
     .notice= flash[:notice]
-      
 %section.princing.padded
   .row-fluid
+    / ITEM
+    .span5
+      .label-round.plan-free
+        %i.ico.edi-rocket
+        %br
+        %h4 MISE A JOUR VERS UN ABONNEMENT GOLD
+        %p  Plusieurs utilisateurs pour votre compte
+        .badge= "#{Account::COMPLEMENT_PRICE}€"
+        %p
+          &nbsp;
+          = form_tag subscription_path, method: :put, id: 'formSolo' do
+            = hidden_field_tag :amount, Account::COMPLEMENT_PRICE
+          
+            %button.stripeify.btn.btn-alert{"data-email" => current_user.email, "data-form" => "#formSolo", "data-name" => "MISE A JOUR", "data-description" => "Plusieurs utilisateurs", "data-image" => image_path('multipage/edgar-head.png'), "data-key" => ENV['STRIPE_PUBLIC_KEY'], "data-amount" => Account::COMPLEMENT_PRICE} Payer en ligne
+      / ITEM
+      
+  .row-fluid
+    %br 
+    Si vous souhaitez modifier votre adhésion en mode GOLD (50€/an) accessible à plusieurs utilisateurs, merci de nous adresser le complément de 30€.
+    Votre adhésion expirera le
+    = l(current_account.subscription_lasts_at)
+    %p 
+    %h3 Par chèque
     %p
-      EN CARTE BLEUE
-      
-      %form#payment-form{:action => subscription_path, :method => "POST"}
-        %span.payment-errors
-        .form-row
-          %label Combien
-          %input{name: :amount}
-        .form-row
-          %label
-            %span Card Number
-            %input{"data-stripe" => "number", :size => "20", :type => "text"}/
-        .form-row
-          %label
-            %span CVC
-            %input{"data-stripe" => "cvc", :size => "4", :type => "text"}/
-        .form-row
-          %label
-            %span Expiration (MM/YYYY)
-            %input{"data-stripe" => "exp-month", :size => "2", :type => "text"}/
-          %span /
-          %input{"data-stripe" => "exp-year", :size => "4", :type => "text"}/
-        %button{:type => "submit"} Submit Payment
-      %br 
-      Si vous souhaitez modifier votre adhésion en mode GOLD (50€/an) accessible à plusieurs utilisateurs, merci de nous adresser le complément de 30€.
-      Votre adhésion expirera le
-      = l(current_account.subscription_lasts_at)
-      
-      %h3 Par chèque
-      %p
-      Envoyez un chèque de 30€ à l'ordre de l'association MERCI EDGAR
-      %br 17 rue des Corroyés, 78730 Saint-Arnoult-en-Yvelines
-      %b Merci de mentionner au dos du chèque le nom de votre compte Merci Edgar
-      %br
-      Votre compte sera en accessible à plusieurs utilisateurs des réception du chèque.
-      
+    Envoyez un chèque de 30€ à l'ordre de l'association MERCI EDGAR
+    %br 17 rue des Corroyés, 78730 Saint-Arnoult-en-Yvelines
+    %b Merci de mentionner au dos du chèque le nom de votre compte Merci Edgar
+    %br
+    Votre compte sera en accessible à plusieurs utilisateurs des réception du chèque.
+    
+  %p
+    %br
+    %h3 Par virement
     %p
-      %br
-      %h3 Par virement
-      %p
-      Faites un virement de 30€ sur le compte de l'association MERCI EDGAR
-      %br
-      %b en mentionnant dans l'objet le nom de votre compte Merci Edgar
-      %br
-      Votre compte sera en accessible à plusieurs utilisateurs des que notre banque nous notifiera votre virement.
-      %br
-      IBAN : FR76 1020 7000 1622 2112 2214 747
-      %br
-      RIB: 10207 00016 22211222147 47
+    Faites un virement de 30€ sur le compte de l'association MERCI EDGAR
+    %br
+    %b en mentionnant dans l'objet le nom de votre compte Merci Edgar
+    %br
+    Votre compte sera en accessible à plusieurs utilisateurs des que notre banque nous notifiera votre virement.
+    %br
+    IBAN : FR76 1020 7000 1622 2112 2214 747
+    %br
+    RIB: 10207 00016 22211222147 47

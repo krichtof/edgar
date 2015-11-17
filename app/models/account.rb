@@ -28,6 +28,7 @@ class Account < ActiveRecord::Base
   
   SOLO_PRICE = 20
   TEAM_PRICE = 50
+  COMPLEMENT_PRICE = 30
 
   OPENING_SUBSCRIPTION_DAY = Date.parse(ENV["OPENING_SUBSCRIPTION_DAY"])
 
@@ -141,8 +142,7 @@ class Account < ActiveRecord::Base
   end
   
   def trial_period_ended?
-    return false if Date.current < OPENING_SUBSCRIPTION_DAY
-    Date.current > ( self.created_at.to_date + 1.month) && last_subscription_at.blank?
+    return !in_trial_period?
   end
   
   def trial_period_lasts_at
@@ -189,8 +189,12 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def subscribe(team=false)
+  def subscribe!(team=false)
     self.last_subscription_at = Date.current
     self.team = team
+  end
+
+  def upgrade!
+    self.team = true
   end
 end

@@ -94,7 +94,7 @@ Edgar::Application.routes.draw do
     resources :coupons
     resources :addresses, only: [:update]
     
-    resource :subscription, only: [:new, :edit, :create]
+    resource :subscription, only: [:new, :edit, :create, :update]
     
   end
 

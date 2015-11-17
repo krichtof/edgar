@@ -46,6 +46,13 @@ class UserMailer < ActionMailer::Base
     mail(to: manager.email, subject: I18n.t('mailers.subscription_receipt.success.subject'))
   end
 
+  def upgrade_receipt_email(account, manager, amount)
+    @account = account
+    @manager = manager
+    @amount = amount
+    mail(to: manager.email, subject: I18n.t('mailers.upgrade_receipt.success.subject'))
+  end
+
   private
 
   def abilitation_email(account, manager, member)

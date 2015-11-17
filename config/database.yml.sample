@@ -1,19 +1,17 @@
 config: &config
   adapter: postgresql
-  pool: 5
   encoding: unicode
-  host: localhost
+  username: postgres
+  password: 
+  pool: 5
+  host: db
 
 development:
-  database: merciedgar
-  username: merciedgar
-  password: PstxloP1
+  database: merciedgar_dev
   <<: *config
 
 test: &test
   database: merciedgar_test
-  username: merciedgar
-  password: PstxloP1
   <<: *config
 
 production:

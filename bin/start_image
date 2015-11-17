@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker run -it -v "$PWD":/app -u 1000 yaf/merciedgar $*

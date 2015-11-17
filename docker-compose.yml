@@ -1,23 +1,49 @@
 ---
 webapp:
-  build: "."
+  build: .
   ports:
     - 3000:3000
   volumes:
     - ".:/usr/src/app"
   working_dir: "/usr/src/app"
-  command: bundle exec rails s -b '0.0.0.0'
+  command: bundle exec rails s -p 3000 -b '0.0.0.0'
   environment:
-    - DATABASE_URL=postgresql://postgres:mysecretpassword@db/
+    - DATABASE_URL=postgresql://postgres:mysecretpassword@db/merciedgar_dev
+    - RAILS_ENV=development
+    - RACK_ENV=development
+    - REDIS_URL=redis://redis:6379
   links:
-    - db:db
+    - db
+    - redis
+
+worker:
+  build: .
+  volumes:
+    - ".:/usr/src/app"
+  working_dir: "/usr/src/app"
+  command: bundle exec sidekiq -c 2 -v -q default -q carrierwave
+  environment:
+    - DATABASE_URL=postgresql://postgres:mysecretpassword@db/merciedgar_dev
+    - RAILS_ENV=development
+    - RACK_ENV=development
+    - REDIS_URL=redis://redis:6379
+  links:
+    - db
+    - redis
+
 db:
   image: postgres
   volumes_from:
     - data
   environment:
     - POSTGRES_PASSWORD=mysecretpassword
+
 data:
   image: busybox
   volumes:
     - "/var/lib/postgresql"
+
+redis:
+  image: redis
+  volumes:
+    - /data/redis:/data

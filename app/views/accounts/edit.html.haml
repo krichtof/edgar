@@ -18,7 +18,9 @@
           - if @account.trial_period_ended?
             - if @account.subscription_up_to_date?
               .badge.inline ADHERENT
+              .badge.inline= @account.plan
               = "Votre adhésion expire le #{l(@account.subscription_lasts_at)}"
+              %p= link_to 'Modifier votre adhésion', edit_subscription_path, class:'btn btn-primary'
             - else
               .badge.inline EXPIRATION
               Votre adhésion a expiré 
@@ -26,6 +28,7 @@
           - else
             .badge.inline PERIODE D'ESSAI
             = "jusqu'au #{l(@account.trial_period_lasts_at)}"
+            = link_to "J'adhere", new_subscription_path, class:'btn btn-primary'
           
       %section.span6
         %h4 Export

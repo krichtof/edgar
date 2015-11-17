@@ -142,7 +142,7 @@ describe Account do
       
     context "already subscribed" do
       let(:account) { FactoryGirl.create(:account, last_subscription_at: Date.current - 1.day) }
-      it { expect(account.trial_period_ended?).to be_falsy }      
+      it { expect(account.trial_period_ended?).to be_truthy } 
     end
     
   end
@@ -253,4 +253,13 @@ describe Account do
       it { expect(account.plan).to eq(I18n.t('account.team_plan')) }
     end
   end 
+
+  describe "upgrade!" do
+    let(:account) { FactoryGirl.build(:account, team: false) }
+    it "upgrades" do
+      account.upgrade!
+    expect(account.team).to be_truthy
+    end
+  end
+
 end

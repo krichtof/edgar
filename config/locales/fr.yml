@@ -379,6 +379,8 @@ fr:
         "Attention ! Votre abonnement expire le %{end_subscription}.
         <a href='%{link}'>Renouveler son abonnement</a>"
       single_user_access: "Le compte %{account_name} a adhéré à l'association MERCI EDGAR en mode SOLO (20€/an), réservé à un seul utilisateur (%{manager_name})."
+      done: "Félicitations ! Vous êtes ahdérent jusqu'au %{end_subscription}"
+      upgrade_done: "Félicitations ! Vous êtes désormais adhérent avec un compte GOLD jusqu'au %{end_subscription}"
   mailers:
     contacts_export:
       success:
@@ -390,6 +392,11 @@ fr:
       success:
         subject: Adhesion validee
         body_html: Nous vous confirmons que votre compte %{account_name} a adhéré à l'association MERCI EDGAR en mode %{plan} pour la somme de %{amount}€ .<p>Votre adhésion expirera le %{end_subscription}.
+    upgrade_receipt:
+      success:
+        subject: Mise à jour de votre compte validee
+        body_html: Nous vous confirmons que votre compte %{account_name} est désormais un compte GOLD. Nous avons bien reçu votre complément de %{amount}€ .<p>Votre adhésion expirera le %{end_subscription}.
+
 
   helpers:
     browse: Parcourir...
