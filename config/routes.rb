@@ -4,6 +4,7 @@ Edgar::Application.routes.draw do
   get "backdoor/play2"
   get "backdoor/play3"
   get "tags/index"
+  
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/  do
     authenticated :user do

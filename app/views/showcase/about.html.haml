@@ -4,9 +4,8 @@
   .container
     = render 'showcase/submenu'
     .thehero
-      %h4 Edgar ? C’est qui ? C’est quoi ?
-      = image_tag("multipage/showcase-banner-about.png")
-      
+      %h4=t('montest.edgar_cest_qui')
+      = image_tag("multipage/showcase-banner-about.png")     
   
     
 %space
@@ -17,16 +16,16 @@
         .img-disc= image_tag("multipage/eclosion.jpg")
         
       .span7
-        %h2 Par et pour les artistes
+        %h2=t('montest.par_pour_artiste') 
         %p
-        En 2012, Christophe Robillard, dit Robi, chanteur, pianiste, compositeur, n'ayant pas de tourneur, constate qu'il dépense à prospecter des lieux une énergie folle qu'il préférerait consacrer à composer, répéter ou jouer. 
+        =t('montest.pstation_christophe') 
         %br
-        Il se rend compte des limites du fichier Excel pour qualifier ses différents contacts. Il constate également qu'il ne connait pas vraiment le milieu du spectacle et comment fonctionne celle ou celui qui le programmera (ou pas) dans tel lieu !
+        =t('montest.pstation_christophe2') 
           
         %p
-        Il décide alors d'interviewer les professionnels du spectacle vivant pour mieux appréhender ce milieu et de se lancer dans le développement d'un logiciel en ligne simple et intuitif qui permettra aux artistes et aux tourneurs d'être plus efficace dans leur recherche de dates.
+        =t('montest.pstation_christophe3')
         %br
-        Il interviewe Aurélie Thuot, du label Adone (Les Fatals Picards…). Enthousiasmée par le projet, elle décide avec Aline Texier de mettre à profit leur expertise en matière de production, diffusion et d'administration pour le logiciel Merci Edgar !
+        =t('montest.pstation_christophe4')
         
         
     .row-fluid

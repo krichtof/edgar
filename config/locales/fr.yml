@@ -7,6 +7,17 @@
 # Emended by Benjamin des Gachons and Patrick Chew : <http://www.fitima.org/docs/fiche.pdf>
 
 fr:
+  montest:
+    edgar_cest_qui: Edgar ? C’est qui ? C’est quoi ?
+    par_pour_artiste: Par et pour les artistes
+    pstation_christophe: "En 2012, Christophe Robillard, dit Robi, chanteur, pianiste, compositeur, n'ayant pas de tourneur, constate qu'il dépense à prospecter des lieux une énergie folle qu'il préférerait consacrer à composer, répéter ou jouer." 
+    pstation_christophe2: "Il se rend compte des limites du fichier Excel pour qualifier ses différents contacts. Il constate également qu'il ne connait pas vraiment le milieu du spectacle et comment fonctionne celle ou celui qui le programmera (ou pas) dans tel lieu !"
+    pstation_christophe3: "Il décide alors d'interviewer les professionnels du spectacle vivant pour mieux appréhender ce milieu et de se lancer dans le développement d'un logiciel en ligne simple et intuitif qui permettra aux artistes et aux tourneurs d'être plus efficace dans leur recherche de dates."
+    pstation_christophe4: "Il interviewe Aurélie Thuot, du label Adone (Les Fatals Picards…). Enthousiasmée par le projet, elle décide avec Aline Texier de mettre à profit leur expertise en matière de production, diffusion et d'administration pour le logiciel Merci Edgar !"
+
+
+
+
   hello: Bonjour
   see_you_soon: A bientôt
   generic_structure: Structure générique
