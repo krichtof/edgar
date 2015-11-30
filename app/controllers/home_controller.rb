@@ -1,4 +1,4 @@
-class HomeController < AppController
+class HomeController < ApplicationController
   def index
     if !current_user.welcome_hidden?
       redirect_to welcome_path

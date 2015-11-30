@@ -1,4 +1,4 @@
-class TagsController < AppController
+class TagsController < ApplicationController
   def index
     type = params[:type]
     if type == "CustomTag"

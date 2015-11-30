@@ -1,4 +1,4 @@
-class AddressesController < AppController
+class AddressesController < ApplicationController
   def update
     address = Address.where(id: params[:id], account_id: Account.current_id).first
     if address

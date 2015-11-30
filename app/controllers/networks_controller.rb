@@ -1,4 +1,4 @@
-class NetworksController < AppController
+class NetworksController < ApplicationController
   def index
     networks = Network.order(:network)
     networks = networks.where("lower(network) LIKE ?", "%#{params[:term].downcase}%") if params[:term].present?

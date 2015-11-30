@@ -1,4 +1,4 @@
-class DashboardController < AppController
+class DashboardController < ApplicationController
   def index
     if params[:empty] == "1"
       render "empty"

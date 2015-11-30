@@ -1,7 +1,7 @@
-class AnnouncementsController < AppController
+class AnnouncementsController < ApplicationController
   after_filter :set_last_hit_cookie
   def index
-    @announcements = Announcement.where("published_at <= ?", Time.zone.now).limit(10).order("published_at DESC")    
+    @announcements = Announcement.where("published_at <= ?", Time.zone.now).limit(10).order("published_at DESC")
   end
   
   def set_last_hit_cookie

@@ -1,4 +1,4 @@
-class CustomsController < AppController
+class CustomsController < ApplicationController
   def index
     customs = Custom.order(:custom)
     customs = customs.where("lower(custom) LIKE ?", "%#{params[:term].downcase}%") if params[:term].present?

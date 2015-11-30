@@ -1,4 +1,4 @@
-class CouponsController < AppController
+class CouponsController < ApplicationController
   def new
     @coupon = Coupon.new
   end
@@ -12,7 +12,6 @@ class CouponsController < AppController
   def edit
     
   end
-  
   
   def update
     @coupon = Coupon.find(params[:id])

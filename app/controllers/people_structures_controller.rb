@@ -1,4 +1,4 @@
-class PeopleStructuresController < AppController
+class PeopleStructuresController < ApplicationController
   def create
     structure = Structure.find(params[:structure_id])
     person_contact = Contact.where(contactable_type: "Person").where("lower(name) LIKE ?", "%#{params[:person_name].downcase}%").first if params[:person_name].present?

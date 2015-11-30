@@ -1,4 +1,4 @@
-class ContactsController < AppController
+class ContactsController < ApplicationController
   def bulk
     @contact_ids = params[:contact_ids]
     case params[:bulk_action]

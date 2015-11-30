@@ -1,4 +1,4 @@
-class OpportunitiesController < AppController
+class OpportunitiesController < ApplicationController
   before_filter :find_opportunity, except: [:index, :new, :create]
 
   def index
