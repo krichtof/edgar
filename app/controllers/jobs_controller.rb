@@ -1,4 +1,4 @@
-class JobsController < AppController
+class JobsController < ApplicationController
   def show
     jid = params[:id]
     logger.debug "jid: #{jid} "

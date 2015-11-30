@@ -1,4 +1,4 @@
-class PeopleController < AppController
+class PeopleController < ApplicationController
   include ApplicationHelper
 
   def index

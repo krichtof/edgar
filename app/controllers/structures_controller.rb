@@ -1,4 +1,4 @@
-class StructuresController < AppController
+class StructuresController < ApplicationController
   include ApplicationHelper
 
   def index

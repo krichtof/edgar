@@ -1,4 +1,4 @@
-class SubscriptionsController < AppController
+class SubscriptionsController < ApplicationController
   skip_before_filter :check_membership, :check_plan
   force_ssl
 

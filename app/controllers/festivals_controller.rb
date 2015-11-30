@@ -1,4 +1,4 @@
-class FestivalsController < AppController
+class FestivalsController < ApplicationController
   include ApplicationHelper
 
   def index

@@ -1,4 +1,4 @@
-class CampaignsController < AppController
+class CampaignsController < ApplicationController
   before_filter :find_campaign, except: [:index, :new, :create]
 
   def index

@@ -1,4 +1,4 @@
-class ContactsImportsController < AppController
+class ContactsImportsController < ApplicationController
   def new
     @import = ContactsImport.new
     @uploader = @import.contacts_file

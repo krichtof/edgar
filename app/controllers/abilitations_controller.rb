@@ -1,4 +1,4 @@
-class AbilitationsController < AppController
+class AbilitationsController < ApplicationController
   before_filter :check_abilitation
   
   def check_abilitation
